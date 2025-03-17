@@ -14,13 +14,19 @@ public class ProductPage {
         this.driver = driver;
     }
 
+    String name;
+
     By SearchBar= By.id("search_product");
     By SearchBarButton= By.id("submit_search");
 
     By ResearchedHeader = By.xpath("//h2[text()='Searched Products']\n");
     String ResearchedTitle = "SEARCHED PRODUCTS";
 
-    By MenCategory = By.xpath("//a[text()='Men']");
+    By MenShirtsHeader = By.xpath("//h2[text()='Men - Tshirts Products']\n");
+    String MenShirtsTitle = "MEN - TSHIRTS PRODUCTS";
+
+    By MenCategory = By.xpath("//a[@href='#Men']");
+    By MenShirts = By.xpath("//a[text()='Tshirts ']\n");
 
     /****************************************************Assertion**********************************************/
 
@@ -30,7 +36,7 @@ public class ProductPage {
         Assert.assertEquals(url,"https://www.automationexercise.com/products");
         return this;
     }
-    public ProductPage CheckThatUserShouldBeNavigatedToTshirtProductsPageSuccessfully(){
+    public ProductPage CheckThatUserShouldBeNavigatedToTshirtProductsSuccessfully(){
 
         String url =driver.getCurrentUrl();
         Assert.assertEquals(url,"https://www.automationexercise.com/products?search=T-shirt");
@@ -45,6 +51,10 @@ public class ProductPage {
         Assert.assertEquals(driver.findElement(ResearchedHeader).getText(), ResearchedTitle);
         return this;
     }
+    public ProductPage CheckThatMenShirtsProductsShouldBeDisplayed (){
+        Assert.assertEquals(driver.findElement(MenShirtsHeader).getText(), MenShirtsTitle);
+        return this;
+    }
 
     /******************************************************Actions*********************************************/
 
@@ -53,8 +63,9 @@ public class ProductPage {
         driver.findElement(SearchBarButton).click();
         return this;
     }
-    public ProductPage SelectMenCategory(){
+    public ProductPage SelectMenShirtsCategory(){
         driver.findElement(MenCategory).click();
+        driver.findElement(MenShirts).click();
         return this;
     }
 
