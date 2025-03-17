@@ -14,7 +14,6 @@ public class ProductPage {
         this.driver = driver;
     }
 
-    String name;
 
     By SearchBar= By.id("search_product");
     By SearchBarButton= By.id("submit_search");
