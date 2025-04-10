@@ -1,13 +1,15 @@
 package Pages;
 
+import DriverFactory.Driver;
+import io.qameta.allure.Step;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.testng.Assert;
 
 public class AccountDeletionPage {
-    private WebDriver driver;
+    private Driver driver;
 
-    public AccountDeletionPage (WebDriver driver)
+    public AccountDeletionPage (Driver driver)
     {
 
         this.driver = driver;
@@ -19,9 +21,10 @@ public class AccountDeletionPage {
 
     /**********************************Assertion**************************************/
 
+    @Step("Check That Account Should Be Deleted Successfully")
     public AccountDeletionPage CheckThatAccountShouldBeDeletedSuccessfully(){
 
-        Assert.assertEquals(driver.findElement(AccountDeletedHeader).getText(), AccountDeletedTitle);
+        Assert.assertEquals(driver.element().getTextOf(AccountDeletedHeader), AccountDeletedTitle);
         return this;
     }
 
@@ -29,8 +32,9 @@ public class AccountDeletionPage {
 
     /*********************************Actions******************************************/
 
+    @Step("Click On Continue Button")
     public HomePage ClickOnContinueButton(){
-        driver.findElement(ContinueButton).click();
+        driver.element().click(ContinueButton);
         return new HomePage(driver);
     }
 }
