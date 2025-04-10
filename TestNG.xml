@@ -4,7 +4,7 @@
     <test name="Chrome Test">
         <parameter name="browserName" value="CHROME"></parameter>
         <classes>
-            <class name="automatiobexercisetests.testClass"></class>
+            <class name="automatiobexercisetests.TestClass"></class>
 <!--            <class name="automatiobexercisetests.LoginSignUpTest"></class>-->
 <!--            <class name="automatiobexercisetests.ProductsTests"></class>-->
         </classes>
@@ -12,7 +12,7 @@
     <test name="Firefox Test">
         <parameter name="browserName" value="FIREFOX"></parameter>
         <classes>
-            <class name="automatiobexercisetests.testClass"></class>
+            <class name="automatiobexercisetests.TestClass"></class>
 <!--            <class name="automatiobexercisetests.LoginSignUpTest"></class>-->
 <!--            <class name="automatiobexercisetests.ProductsTests"></class>-->
         </classes>
