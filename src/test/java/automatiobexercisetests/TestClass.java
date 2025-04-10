@@ -4,23 +4,9 @@ import Pages.HomePage;
 import Pages.LoginSignUpPage;
 import Pages.RegistrationPage;
 import Pages.RegistrationSuccessPage;
-import org.openqa.selenium.OutputType;
-import org.openqa.selenium.TakesScreenshot;
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.chrome.ChromeDriver;
-import org.testng.ITestClass;
-import org.testng.ITestResult;
 import org.testng.annotations.*;
-import utilities.ScreenShotManager;
 
-import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
-import java.nio.file.StandardOpenOption;
-import java.time.Duration;
-
-public class testClass {
+public class TestClass {
 
     public ThreadLocal<Driver> driver;
     private HomePage homePage;
