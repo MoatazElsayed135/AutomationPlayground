@@ -1,41 +1,51 @@
 package automatiobexercisetests;
 
+import DriverFactory.Driver;
 import Pages.HomePage;
+import Pages.ProductPage;
+import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
-import org.testng.annotations.AfterMethod;
-import org.testng.annotations.BeforeMethod;
-import org.testng.annotations.Test;
+import org.testng.annotations.*;
+
 import java.time.Duration;
 
 public class ProductsTests {
 
-    private WebDriver driver;
+    public ThreadLocal<Driver> driver;
 
 
-    @BeforeMethod
-    public void setup(){
-        driver = new ChromeDriver();
-        driver.navigate().to("https://www.automationexercise.com/");
-        driver.manage().window().maximize();
-        driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(2));
+    @BeforeClass
+    @Parameters(value = {"browserName"})
+    public void setup(@Optional("CHROME") String browserName) {
+        driver = new ThreadLocal<>();
+        driver.set(new Driver(browserName));
+        driver.get().browser().navigateToURL("https://www.automationexercise.com/");
     }
 
-    @Test
+
+    @Test(priority = 1)
     public void ProductTests(){
-        new HomePage(driver).ClickOnProductButton()
+        new HomePage(driver.get()).ClickOnProductButton()
                 .CheckThatUserShouldBeNavigatedToProductPageSuccessfully()
                 .CheckThatSearchBarShouldBeDisplayed()
                 .WriteInSearchBar()
-                .CheckThatUserShouldBeNavigatedToTshirtProductsPageSuccessfully()
+                .CheckThatUserShouldBeNavigatedToTshirtProductsSuccessfully()
                 .CheckThatResearchedProductShouldBeDisplayed();
+    }
+
+    @Test(priority = 2)
+    public void SelectMenShirts(){
+        new ProductPage(driver.get())
+                .SelectMenShirtsCategory()
+                .CheckThatMenShirtsProductsShouldBeDisplayed();
     }
 
 
 
-    @AfterMethod
+    @AfterClass
     public void tearDown() throws InterruptedException {
         Thread.sleep(3000);
-        driver.quit();
+        driver.get().Quit();
     }
 }

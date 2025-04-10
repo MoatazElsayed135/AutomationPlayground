@@ -1,14 +1,16 @@
 package Pages;
 
+import DriverFactory.Driver;
+import io.qameta.allure.Step;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.testng.Assert;
 
 public class ProductPage {
 
-    private WebDriver driver;
+    private Driver driver;
 
-    public ProductPage(WebDriver driver)
+    public ProductPage(Driver driver)
     {
 
         this.driver = driver;
@@ -29,42 +31,49 @@ public class ProductPage {
 
     /****************************************************Assertion**********************************************/
 
+    @Step("Check That User Should Be Navigated To Product Page Successfully")
     public ProductPage CheckThatUserShouldBeNavigatedToProductPageSuccessfully(){
 
-        String url =driver.getCurrentUrl();
+        String url =driver.browser().getCurrentURL();
         Assert.assertEquals(url,"https://www.automationexercise.com/products");
         return this;
     }
+    @Step("Check That User Should Be Navigated To T-shirt Products Successfully")
     public ProductPage CheckThatUserShouldBeNavigatedToTshirtProductsSuccessfully(){
 
-        String url =driver.getCurrentUrl();
+        String url =driver.browser().getCurrentURL();
         Assert.assertEquals(url,"https://www.automationexercise.com/products?search=T-shirt");
         return this;
     }
+    @Step("Check That Search Bar Should Be Displayed")
     public ProductPage CheckThatSearchBarShouldBeDisplayed(){
-        Assert.assertTrue(driver.findElement(SearchBar).isDisplayed());
+        Assert.assertTrue(driver.element().isDisplayed(SearchBar));
         return this;
     }
 
+    @Step("Check That Researched Product Should Be Displayed")
     public ProductPage CheckThatResearchedProductShouldBeDisplayed (){
-        Assert.assertEquals(driver.findElement(ResearchedHeader).getText(), ResearchedTitle);
+        Assert.assertEquals(driver.element().getTextOf(ResearchedHeader), ResearchedTitle);
         return this;
     }
+    @Step("Check That Men Shirts Products Should Be Displayed")
     public ProductPage CheckThatMenShirtsProductsShouldBeDisplayed (){
-        Assert.assertEquals(driver.findElement(MenShirtsHeader).getText(), MenShirtsTitle);
+        Assert.assertEquals(driver.element().getTextOf(MenShirtsHeader), MenShirtsTitle);
         return this;
     }
 
     /******************************************************Actions*********************************************/
 
+    @Step("Write In Search Bar")
     public ProductPage WriteInSearchBar(){
-        driver.findElement(SearchBar).sendKeys("T-shirt");
-        driver.findElement(SearchBarButton).click();
+        driver.element().type(SearchBar,"T-shirt");
+        driver.element().click(SearchBarButton);
         return this;
     }
+    @Step("Select Men Shirts Category")
     public ProductPage SelectMenShirtsCategory(){
-        driver.findElement(MenCategory).click();
-        driver.findElement(MenShirts).click();
+        driver.element().click(MenCategory);
+        driver.element().click(MenShirts);
         return this;
     }
 

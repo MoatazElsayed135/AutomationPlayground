@@ -1,14 +1,16 @@
 package Pages;
 
+import DriverFactory.Driver;
+import io.qameta.allure.Step;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.testng.Assert;
 
 public class RegistrationSuccessPage {
 
-    private WebDriver driver;
+    private Driver driver;
 
-    public RegistrationSuccessPage (WebDriver driver)
+    public RegistrationSuccessPage (Driver driver)
     {
         this.driver = driver;
     }
@@ -19,24 +21,27 @@ public class RegistrationSuccessPage {
 
     /**********************************Assertion**************************************/
 
+    @Step("Check That Url Of Success Registration Is Correct")
     public RegistrationSuccessPage CheckThatUrlOfSuccessRegistrationIsCorrect(){
 
-        String url2 =driver.getCurrentUrl();
+        String url2 =driver.browser().getCurrentURL();
         Assert.assertEquals(url2,"https://www.automationexercise.com/account_created");
         return this;
     }
 
+    @Step("Check That Account Created Should Be Displayed")
     public RegistrationSuccessPage CheckThatAccountCreatedShouldBeDisplayed(){
 
-        Assert.assertEquals(driver.findElement(SuccessRegistrationHeader).getText(), SuccessRegistrationTitle);
+        Assert.assertEquals(driver.element().getTextOf(SuccessRegistrationHeader), SuccessRegistrationTitle);
         return this;
     }
 
 
     /******************************************Actions**************************************************************/
 
+    @Step("Click On Continue Button")
     public HomePage ClickOnContinueButton(){
-        driver.findElement(ContinueButton).click();
+        driver.element().click(ContinueButton);
         return new HomePage(driver);
     }
 }

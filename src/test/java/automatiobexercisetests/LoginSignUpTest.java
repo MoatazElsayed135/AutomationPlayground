@@ -1,5 +1,6 @@
 package automatiobexercisetests;
 
+import DriverFactory.Driver;
 import Pages.HomePage;
 import Pages.LoginSignUpPage;
 import Pages.RegistrationPage;
@@ -12,37 +13,39 @@ import java.time.Duration;
 
 public class LoginSignUpTest {
 
-    private WebDriver driver;
+
+    public ThreadLocal<Driver> driver;
 
 
-    @BeforeMethod
-    public void setup(){
-        driver = new ChromeDriver();
-        driver.navigate().to("https://www.automationexercise.com/");
-        driver.manage().window().maximize();
-        driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(2));
+    @BeforeClass
+    @Parameters(value = {"browserName"})
+    public void setup(@Optional("CHROME") String browserName) {
+        driver = new ThreadLocal<>();
+        driver.set(new Driver(browserName));
+        driver.get().browser().navigateToURL("https://www.automationexercise.com/");
     }
 
     @Test (priority = 1)
     public void ExistingEmailError(){
-        new HomePage(driver).ClickOnLoginSignUpPage()
+        new HomePage(driver.get()).ClickOnLoginSignUpPage()
                 .CheckThatSignUpFormTitleShouldBeDisplayed()
                 .FillSignUpForm("Moataz Elsayed", "motazoza116256513@gmail.com");
-        new LoginSignUpPage(driver).CheckThatExistingEmailErrorShouldBeDisplayed();
+        new LoginSignUpPage(driver.get()).CheckThatExistingEmailErrorShouldBeDisplayed();
+
 
     }
     @Test(priority = 2)
     public void InCorrectCredentialsMessage(){
-        new HomePage(driver).ClickOnLoginSignUpPage()
+        new HomePage(driver.get()).ClickOnLoginSignUpPage()
                 .CheckThatSignUpFormTitleShouldBeDisplayed()
                 .FillLoginForm("2165165", "hjgj@hgj.com");
-        new LoginSignUpPage(driver).CheckThatInCorrectCredentialsMessageShouldBeDisplayed();
+        new LoginSignUpPage(driver.get()).CheckThatInCorrectCredentialsMessageShouldBeDisplayed();
 
     }
 
-    @AfterMethod
+    @AfterClass
     public void tearDown() throws InterruptedException {
         Thread.sleep(3000);
-        driver.quit();
+        driver.get().Quit();
     }
 }

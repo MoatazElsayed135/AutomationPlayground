@@ -1,5 +1,7 @@
 package Pages;
 
+import DriverFactory.Driver;
+import io.qameta.allure.Step;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -8,10 +10,10 @@ import org.testng.Assert;
 
 public class RegistrationPage {
 
-    private WebDriver driver;
+    private Driver driver;
 
 
-    public RegistrationPage (WebDriver driver)
+    public RegistrationPage (Driver driver)
     {
         this.driver = driver;
     }
@@ -31,14 +33,16 @@ public class RegistrationPage {
 
     /**********************************Assertion**************************************/
 
+    @Step("Check That Enter Account Information Should Be Displayed")
     public RegistrationPage CheckThatEnterAccountInformationShouldBeDisplayed (){
-        Assert.assertEquals(driver.findElement(RegistrationHeader).getText(), RegistrationTitle);
+        Assert.assertEquals(driver.element().getTextOf(RegistrationHeader),RegistrationTitle);
         return this;
     }
 
+    @Step("Check That Url Of Registration Page Is Correct")
     public RegistrationPage CheckThatUrlOfRegistrationPageIsCorrect(){
 
-        String url =driver.getCurrentUrl();
+        String url =driver.browser().getCurrentURL();
         Assert.assertEquals(url,"https://www.automationexercise.com/signup");
         return this;
     }
@@ -47,24 +51,26 @@ public class RegistrationPage {
 
     /*********************************Actions******************************************/
 
+    @Step("Fill Registration Form")
     public RegistrationSuccessPage FillRegistrationForm(String password , String firstName, String lastName
             ,String address,String state,String city,String zipCode,String mobileNumber)
     {
-        driver.findElement(PasswordField).sendKeys(password);
-        driver.findElement(FirstNameField).sendKeys(firstName);
-        driver.findElement(LastNameField).sendKeys(lastName);
-        driver.findElement(AddressField).sendKeys(address);
+        driver.element().type(PasswordField,password);
+        driver.element().type(FirstNameField,firstName);
+        driver.element().type(LastNameField,lastName);
+        driver.element().type(AddressField,address);
 
         // اختيار الدولة من القائمة المنسدلة
-        Select select = new Select(driver.findElement(CountryField));
+        Select select = new Select(driver.get().findElement(CountryField));
         select.selectByVisibleText("United States");
 
-        driver.findElement(StateField).sendKeys(state);
-        driver.findElement(CityField).sendKeys(city);
-        driver.findElement(ZipCodeField).sendKeys(zipCode);
-        driver.findElement(MobileNumberField).sendKeys(mobileNumber);
-        driver.findElement(CountryField).click();
-        driver.findElement(CreateAccountButton).click();
+        driver.element().type(StateField,state);
+        driver.element().type(CityField,city);
+        driver.element().type(ZipCodeField,zipCode);
+        driver.element().type(MobileNumberField,mobileNumber);
+        driver.element().click(CountryField);
+        driver.browser().scrollToBottom();
+        driver.element().click(CreateAccountButton);
         return new RegistrationSuccessPage(driver);
     }
 }
